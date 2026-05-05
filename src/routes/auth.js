@@ -31,4 +31,22 @@ router.post('/login', async (req, res) => {
   res.json({ token, userId: user.userId });
 });
 
+router.get('/check/:userId', async (req, res) => {
+  const user = await User.findOne({ userId: req.params.userId.trim() });
+  if (!user) return res.status(404).json({ error: 'not_found' });
+  res.json({ exists: true });
+});
+
+router.post('/reset-password', async (req, res) => {
+  const { userId, newPassword } = req.body;
+  if (!userId?.trim() || !newPassword) return res.status(400).json({ error: 'missing_fields' });
+
+  const user = await User.findOne({ userId: userId.trim() });
+  if (!user) return res.status(404).json({ error: 'not_found' });
+
+  user.password = await bcrypt.hash(newPassword, 10);
+  await user.save();
+  res.json({ ok: true });
+});
+
 module.exports = router;
