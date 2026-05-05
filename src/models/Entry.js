@@ -7,7 +7,7 @@ const entrySchema = new Schema({
   cat: {
     type: String,
     required: true,
-    enum: ['iş', 'kişisel', 'sağlık', 'sosyal', 'öğrenme', 'diğer'],
+    enum: ['calisma', 'egitim', 'egzersiz', 'mola', 'eglence', 'saglik', 'muzik', 'diger', 'iş', 'kişisel', 'sağlık', 'sosyal', 'öğrenme', 'diğer'],
   },
   min: { type: Number, required: true },
   startTime: { type: String, required: true },
